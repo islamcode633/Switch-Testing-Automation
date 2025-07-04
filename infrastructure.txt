@@ -1,0 +1,56 @@
+
+
+apt install git gcc make libpcap-dev sshpass
+
+
+Steps for creating br0:
+	apt install bridge-utils
+	brctl addbr br0
+	ip a
+	ip addr add 0.0.0.0 dev enp4s0	ip link set dev enp4s0 promisc on
+
+	brctl addif br0 enp4s0
+	ip addr add 192.168.127.10/24  dev br0
+	route add all interface in br0
+	GNS3 -> Node Cloud -> tap interface (tap0)
+	Connect Switch to GNS3 Labs
+
+
+GNS3 server:
+	Гайд по установке GNS3 server:
+	http://fst-jira.prosoft.ru:8090/pages/viewpage.action?pageId=83886668
+
+	--------
+	~/GNS3/{images,configs,projects,etc..}
+	~/.config/GNS3/3.0/*
+	--------
+	~/config/GNS3/3.0/gns3_server.conf <
+		[Controller]
+		default_admin_username = admin
+		default_admin_password = admin
+		[Server]
+		name = t-800
+		host = 127.0.0.1
+		port = 3080
+		compute_username = gns3
+		compute_password = gns3
+		ubridge_path = /Applications/GNS3.app/Contents/Resources/ubridge
+		[VPCS]
+		vpcs_path = /bin/vpcs_..._Linux64
+		[Docker]
+		...
+
+
+pythone3:
+	pip install
+		json
+		requests
+		netmiko
+		paramiko
+		napalm
+		textfsm
+		scapy
+		subproccess
+
+напрямую предоставить Python возможность CAP_NET_RAW для работы scapy с raw сокетами:
+sudo setcap cap_net_raw=eip $(readlink -f $(which python))

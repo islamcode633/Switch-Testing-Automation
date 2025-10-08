@@ -1,7 +1,0 @@
-"""
-
-"""
-
-class CookieGenerateError(Exception):
-    """ """
-    pass
